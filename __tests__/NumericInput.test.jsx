@@ -63,6 +63,18 @@ describe('NumericInput', function() {
         expect(inputNode.value).toEqual('0');
     });
 
+    it('accepts value of 3.01', () => {
+        var widget = TestUtils.renderIntoDocument(<NumericInput value=""/>),
+            inputNode = widget.refsInput;
+
+        var values = ['3', '3.', '3.0', '3.01', '3.010', '3.0102'];
+        values.forEach(v => {
+            TestUtils.Simulate.change(inputNode, { target: { value: v } });
+            expect(widget.state.stringValue).toEqual(v);
+        });
+        expect(inputNode.value).toEqual('3.0102');
+    });
+
     it('accepts value of ""', () => {
         var widget = TestUtils.renderIntoDocument(<NumericInput value=""/>),
             inputNode = widget.refsInput;

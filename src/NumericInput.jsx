@@ -6,7 +6,12 @@ const KEYCODE_UP           = 38;
 const KEYCODE_DOWN         = 40;
 const IS_BROWSER           = typeof document != 'undefined';
 const RE_NUMBER            = /^[+-]?((\.\d+)|(\d+(\.\d+)?))$/;
-const RE_INCOMPLETE_NUMBER = /^([+-]|\.0*|[+-]\.0*|[+-]?\d+\.)?$/;
+// Should match an input that is not a complete number (i.e. no extraneous
+// characters), but could be one with additional inputs:
+//  - an optional plus/minus sign, possibly followed by a leading zero
+//  - an incomplete decimal (e.g. "3.") OR
+//  - a decimal number with trailing zeroes (e.g. "3.0" or "3.010")
+const RE_INCOMPLETE_NUMBER = /^([+-]0?)?(\d*\.(\d*?0)?)?$/;
 
 /**
  * Just a simple helper to provide support for older IEs. This is not exactly a
