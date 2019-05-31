@@ -82,7 +82,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var KEYCODE_DOWN = 40;
 	var IS_BROWSER = typeof document != 'undefined';
 	var RE_NUMBER = /^[+-]?((\.\d+)|(\d+(\.\d+)?))$/;
-	var RE_INCOMPLETE_NUMBER = /^([+-]|[0-9]*\.0*|[+-]\.0*|[+-]?\d+\.)?$/;
+	// Should match an input that is not a complete number (i.e. no extraneous
+	// characters), but could be one with additional inputs:
+	//  - an optional plus/minus sign, possibly followed by a leading zero
+	//  - an incomplete decimal (e.g. "3.") OR
+	//  - a decimal number with trailing zeroes (e.g. "3.0" or "3.010")
+	var RE_INCOMPLETE_NUMBER = /^([+-]0?)?(\d*\.(\d*?0)?)?$/;
 
 	/**
 	 * Just a simple helper to provide support for older IEs. This is not exactly a
@@ -1082,7 +1087,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
 	    defaultValue: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
 	    strict: _propTypes2.default.bool,
-	    componentClass: _propTypes2.default.string,
+	    componentClass: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string]),
 	    mobile: function mobile(props, propName) {
 	        var prop = props[propName];
 	        if (prop !== true && prop !== false && prop !== 'auto' && typeof prop != 'function') {
